@@ -11,7 +11,7 @@ app.use(express.static('public'));
 // Constants
 const OFFICIAL_REPO = 'muzii-523/MUZAMMILMD-';
 const HEROKU_API = {
-  baseURL: 'HRKU-AAjxO9us0Frd9oC429LuXUU967hRm1So2y2-guLD80Vw_____wwhBsuNF606',
+  baseURL: 'https://api.heroku.com',
   headers: {
     'Content-Type': 'application/json',
     'Accept': 'application/vnd.heroku+json; version=3',
