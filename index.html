@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>MUZAMMIL_MD DEPLOY</title>
+  <style>
+    body { font-family: Arial; text-align: center; padding: 20px; }
+    input, button { padding: 10px; margin: 10px; width: 80%; }
+  </style>
+</head>
+<body>
+  <h1>🚀 MUZAMMIL_MD BOT DEPLOY</h1>
+  
+  <!-- Step 1: GitHub Username -->
+  <div id="step1">
+    <p>1. Apna GitHub username daalo:</p>
+    <input type="text" id="githubUsername" placeholder="GitHubUsername">
+  </div>
+
+  <!-- Step 2: SESSION_ID (Hidden Initially) -->
+  <div id="step2" style="display:none;">
+    <p>2. Apna SESSION_ID paste karo:</p>
+    <input type="text" id="sessionId" placeholder="(MUZAMMIL_MD~)SFMyNTY...">
+  </div>
+
+  <button id="submitBtn">SUBMIT</button>
+  <div id="result"></div>
+
+  <script>
+    document.getElementById("submitBtn").addEventListener("click", async () => {
+      const username = document.getElementById("githubUsername").value;
+      const sessionId = document.getElementById("sessionId").value;
+
+      // Step 1: Verify Fork
+      if (!sessionId) {
+        const res = await fetch(`https://api.github.com/repos/${username}/MUZAMMILMD-`);
+        if (res.ok) {
+          document.getElementById("step1").style.display = "none";
+          document.getElementById("step2").style.display = "block";
+        } else {
+          alert("Pehle fork karo: https://github.com/muzii-523/MUZAMMILMD-/fork");
+        }
+        return;
+      }
+
+      // Step 2: Deploy
+      const deployRes = await fetch("/deploy", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ github_username: username, session_id: sessionId })
+      });
+      const data = await deployRes.json();
+      
+      document.getElementById("result").innerHTML = data.success 
+        ? `✅ Bot Ready: <a href="${data.url}" target="_blank">${data.url}</a>` 
+        : `❌ Error: ${data.error}`;
+    });
+  </script>
+</body>
+</html>
